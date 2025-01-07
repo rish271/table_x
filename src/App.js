@@ -19,17 +19,10 @@ import {
   Avatar,
   Typography,
 } from "@mui/material";
+import { allColumns } from "./utils/columns";
+import { generateRandomColor } from "./utils/helper";
 
 // Utility function to generate a random color
-const generateRandomColor = () => {
-  const letters = "0123456789ABCDEF";
-  let color = "#";
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-};
-
 const ManageableTable = () => {
   const [data, setData] = useState([]); // Full dataset
   const [filteredData, setFilteredData] = useState([]); // Displayed data
@@ -37,23 +30,8 @@ const ManageableTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [openModal, setOpenModal] = useState(false);
-
   const [sortColumn, setSortColumn] = useState(null);
   const [sortDirection, setSortDirection] = useState("asc");
-
-  const allColumns = [
-    { id: "name", label: "Name", visible: true },
-    { id: "managerEmail", label: "Manager Email", visible: true },
-    { id: "location", label: "Location", visible: true },
-    { id: "department", label: "Department", visible: true },
-    { id: "role", label: "Role", visible: true },
-    { id: "enps", label: "ENPS", visible: true },
-    { id: "mrxScore", label: "MRX Score", visible: true },
-    { id: "performanceRating", label: "Performance Rating", visible: true },
-    { id: "projectsCompleted", label: "Projects Completed", visible: true },
-    { id: "doj", label: "Date of Joining", visible: true },
-    { id: "tenure", label: "Tenure (months)", visible: true },
-  ];
   const [columns, setColumns] = useState(allColumns);
 
   // Simulate fetching data
@@ -76,14 +54,12 @@ const ManageableTable = () => {
         avatarColor: generateRandomColor(),
       }));
     };
-
     setData(generateMockData());
   }, []);
 
   const fetchData = (offset, limit) => {
     return new Promise((resolve) => {
       let result = [...data];
-
       if (search) {
         result = result.filter(
           (item) =>
@@ -91,7 +67,6 @@ const ManageableTable = () => {
             item.managerEmail.toLowerCase().includes(search.toLowerCase())
         );
       }
-
       setTimeout(() => {
         resolve(result.slice(offset, offset + limit));
       }, 300);
@@ -102,7 +77,6 @@ const ManageableTable = () => {
     const loadPageData = async () => {
       const offset = page * rowsPerPage;
       const limit = rowsPerPage;
-
       const result = await fetchData(offset, limit);
 
       if (sortColumn) {
