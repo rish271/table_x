@@ -204,8 +204,8 @@ const ManageableTable = () => {
                   style={{
                     cursor: "pointer",
                     background: "#f5f5f5",
-                    padding: "8px 16px", // Reduced padding for shorter height
-                    fontSize: "0.875rem", // Smaller font size for header
+                    padding: "8px 16px", 
+                    fontSize: "0.875rem",
                     fontWeight: 600,
 
                     ...(column.id === "name"
@@ -213,7 +213,7 @@ const ManageableTable = () => {
                           position: "sticky",
                           left: 0,
                           zIndex: 100,
-                          backgroundColor: "#fff", // Ensuring it's above other rows
+                          backgroundColor: "#fff",
                           borderRight: "2px solid #e0e0e0",
                         }
                       : {}),
@@ -232,16 +232,23 @@ const ManageableTable = () => {
                 {visibleColumns.map((column) => (
                   <TableCell
                     key={column.id}
-                    style={
-                      column.id === "name"
+                    style={{
+                      ...(column.id === "name"
                         ? {
                             position: "sticky",
                             left: 0,
                             background: "#fff",
                             borderRight: "2px solid #e0e0e0",
                           }
-                        : {}
-                    }
+                        : {}),
+                    }}
+                    sx={{
+                      width: "200px", // Adjust the width of each cell
+                      maxWidth: "200px", // Optional to limit max width
+                      whiteSpace: "nowrap", // Prevent content from wrapping
+                      overflow: "hidden", // Hide overflowing content if necessary
+                      textOverflow: "ellipsis", // Add ellipsis if the content overflows
+                    }}
                   >
                     {column.id === "name" ? (
                       <div style={{ display: "flex", alignItems: "center" }}>
