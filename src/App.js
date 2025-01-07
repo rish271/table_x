@@ -176,8 +176,10 @@ const ManageableTable = () => {
         style={{
           display: "flex",
           width: "100%",
-          justifyContent: "space-between",
+          justifyContent: "center",
           alignItems: "center",
+          padding:'5px',
+          gap:'5px'
         }}
       >
         <TextField
@@ -186,9 +188,9 @@ const ManageableTable = () => {
           fullWidth
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          style={{ marginBottom: "1rem", width: "60%" }}
+          style={{ marginBottom: "1rem", width: "80%" }}
         />
-        <Button onClick={() => setOpenModal(true)}>Manage Columns</Button>
+        <Button onClick={() => setOpenModal(true)} sx={{border:'1px solid gray',width:'20%'}}>Manage Columns</Button>
       </div>
       <TableContainer
         component={Paper}
