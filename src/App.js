@@ -20,7 +20,7 @@ import {
   Typography,
 } from "@mui/material";
 import { allColumns } from "./utils/columns";
-import { generateRandomColor } from "./utils/helper";
+import { generateRandomColor, generateRandomName } from "./utils/helper";
 
 // Utility function to generate a random color
 const ManageableTable = () => {
@@ -39,7 +39,7 @@ const ManageableTable = () => {
     const generateMockData = () => {
       return Array.from({ length: 50 }, (_, index) => ({
         id: index + 1,
-        name: `Name ${index + 1}`,
+        name: generateRandomName(),
         userEmail: `user${index + 1}@example.com`,
         managerEmail: `manager${index + 1}@example.com`,
         location: `Location ${(index % 5) + 1}`,
