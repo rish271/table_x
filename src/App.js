@@ -109,21 +109,29 @@ const ManageableTable = () => {
         result.sort((a, b) => {
           const valueA = a[sortColumn];
           const valueB = b[sortColumn];
-
-          const numericA = parseInt(valueA.match(/\d+/)?.[0], 10) || 0;
-          const numericB = parseInt(valueB.match(/\d+/)?.[0], 10) || 0;
-
-          if (!isNaN(numericA) && !isNaN(numericB)) {
-            return sortDirection === "asc"
-              ? numericA - numericB
-              : numericB - numericA;
+      
+          if (typeof valueA === "number" && typeof valueB === "number") {
+            // Numeric comparison
+            return sortDirection === "asc" ? valueA - valueB : valueB - valueA;
+          } else if (typeof valueA === "string" && typeof valueB === "string") {
+            // Lexical comparison (for strings)
+            const numericA = parseInt(valueA.match(/\d+/)?.[0], 10) || 0;
+            const numericB = parseInt(valueB.match(/\d+/)?.[0], 10) || 0;
+      
+            if (!isNaN(numericA) && !isNaN(numericB)) {
+              return sortDirection === "asc" ? numericA - numericB : numericB - numericA;
+            } else {
+              if (valueA < valueB) return sortDirection === "asc" ? -1 : 1;
+              if (valueA > valueB) return sortDirection === "asc" ? 1 : -1;
+              return 0;
+            }
           } else {
-            if (valueA < valueB) return sortDirection === "asc" ? -1 : 1;
-            if (valueA > valueB) return sortDirection === "asc" ? 1 : -1;
+            // Fallback for mixed types or other cases
             return 0;
           }
         });
       }
+      
 
       setFilteredData(result);
     };
